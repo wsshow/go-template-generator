@@ -38,17 +38,17 @@ func Search(dirPath string) {
 		log.Fatalln(err)
 	}
 	for _, dir := range dirs {
+		fullpath := dirPath + "/" + dir.Name()
 		if dir.IsDir() {
-			if !IsPathExist(dir.Name()) {
-				err = CreatDir(dir.Name())
+			if !IsPathExist(fullpath) {
+				err = CreatDir(fullpath)
 				if err != nil {
 					log.Fatalln(err)
 				}
 			}
 			Search(dirPath + "/" + dir.Name())
 		} else {
-			fullpath := dirPath + "/" + dir.Name()
-			wpath := strings.TrimSuffix(fullpath[10:], "t")
+			wpath := strings.TrimSuffix(fullpath, "t")
 			if !IsPathExist(wpath) {
 				bs, err := templates.ReadFile(fullpath)
 				if err != nil {
